@@ -7,6 +7,7 @@ const getTeams = asyncHandler(async (req, res) => {
   const team = await Team.find({ user: req.user.id });
   res.status(200).json(team);
 });
+
 const newTeam = asyncHandler(async (req, res) => {
   const { name, teamSize } = req.body;
   if (!name || !teamSize) {
@@ -29,16 +30,14 @@ const updateTeam = asyncHandler(async (req, res) => {
     throw new Error("Team not found!");
   }
 
-  const user = await User.findById(req.user.id);
-
   //check for user
-  if (!user) {
+  if (!req.user) {
     res.status(401);
     throw new Error("user not found");
   }
 
   //make sure the logged is user matches the team user
-  if (team.user.toString() !== user.id) {
+  if (team.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not Authorized");
   }
@@ -64,16 +63,14 @@ const deleteTeam = asyncHandler(async (req, res) => {
     throw new Error("Team not found");
   }
 
-  const user = await User.findById(req.user.id);
-
   //check for user
-  if (!user) {
+  if (!req.user) {
     res.status(401);
     throw new Error("user not found");
   }
 
   //make sure the logged is user matches the team user
-  if (team.user.toString() !== user.id) {
+  if (team.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not Authorized");
   }
