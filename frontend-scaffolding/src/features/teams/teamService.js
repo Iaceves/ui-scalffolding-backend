@@ -4,7 +4,6 @@ const API_URL = "http://localhost:8000";
 
 //Create new Team
 const createTeam = async (teamData, token) => {
-  console.log("team data in services: ", teamData);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -12,7 +11,6 @@ const createTeam = async (teamData, token) => {
   };
 
   const res = await axios.post(API_URL + "/api/teams", teamData, config);
-  console.log("response: ", res.data);
   return res.data;
 };
 

@@ -14,11 +14,9 @@ export const createTeam = createAsyncThunk(
   "team/create",
   async (teamData, thunkAPI) => {
     try {
-      console.log("inside of creating a team:", teamData);
       const token = thunkAPI.getState().auth.user.token;
       return await teamService.createTeam(teamData, token);
     } catch (error) {
-      console.log("error:", error);
       const message =
         (error.res && error.res.data && error.res.data.message) ||
         error.message ||
